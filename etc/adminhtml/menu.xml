@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+    <menu>
+        <add id="Interteleco_SMSBox::smsbox"
+             title="SMSBox"
+             module="Interteleco_SMSBox"
+             sortOrder="50"
+             resource="Interteleco_SMSBox::smsbox"/>
+        <add parent="Interteleco_SMSBox::smsbox"
+             title="Sending Log"
+             module="Interteleco_SMSBox"
+             sortOrder="10"
+             resource="Interteleco_SMSBox::smsbox"
+             id="Interteleco_SMSBox::history"
+             action="smsbox/history" />
+        <add parent="Interteleco_SMSBox::smsbox"
+             title="Test SMSBox"
+             module="Interteleco_SMSBox"
+             sortOrder="20"
+             resource="Interteleco_SMSBox::smsbox"
+             id="Interteleco_SMSBox::test"
+             action="smsbox/test"/>
+        <add parent="Interteleco_SMSBox::smsbox"
+             title="Configuration"
+             module="Interteleco_SMSBox"
+             sortOrder="40"
+             action="adminhtml/system_config/edit/section/interteleco_smsbox_configuration"
+             id="Interteleco_SMSBox::config"
+             resource="Interteleco_SMSBox::smsbox"/>
+    </menu>
+</config>
