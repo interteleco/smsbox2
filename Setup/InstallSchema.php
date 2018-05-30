@@ -7,26 +7,18 @@ use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
 use Magento\Framework\DB\Ddl\Table;
 
-/**
- * @codeCoverageIgnore
- */
-
 class InstallSchema implements InstallSchemaInterface
 {
 
-    /**
-     * {@inheritdoc}
-     */
-    // @codingStandardsIgnoreStart
     public function install(
         SchemaSetupInterface $setup,
         ModuleContextInterface $context
     ) {
-        // @codingStandardsIgnoreEnd
         $installer = $setup;
         $installer->startSetup();
 
         $tableName = $installer->getTable('interteleco_smsbox');
+
         if ($installer->getConnection()->isTableExists($tableName) != true) {
             $table = $installer->getConnection()
                 ->newTable($tableName)

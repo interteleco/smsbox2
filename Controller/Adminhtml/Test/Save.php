@@ -12,7 +12,7 @@ class Save extends Action
      *
      * @var \Interteleco\SMSBox\Helper\Data
      */
-    protected $helper;
+    private $helper;
     /**
      * Constructor
      *
@@ -34,6 +34,7 @@ class Save extends Action
         $senderId   = $this->getRequest()->getParam('sender_id');
         $phone      = $this->getRequest()->getParam('phone_number');
         $langTest   = $this->getRequest()->getParam('lang_test');
+
         $message    = ($langTest == 'ar')
             ? 'هذه رسالة تجريبية من ماجينتو'
             : 'Test SMS FROM MAGENTO 2' ;

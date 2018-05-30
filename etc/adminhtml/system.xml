@@ -21,9 +21,9 @@
                     <validate>required-entry</validate>
                 </field>
                 <field id="smsbox_key" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>SMSBOX Customer ID</label>
-                    <comment><![CDATA[To get your Customer ID go to:&nbsp;<a target="_blank" href='https://www.smsbox.com/customer/myaccount'>My Account</a>]]></comment>
-                    <tooltip>Your API Key must be the same as your smsbox customer ID</tooltip>
+                    <label>SMSBOX API ID</label>
+                    <comment><![CDATA[To get your API ID go to:&nbsp;<a target="_blank" href='https://www.smsbox.com/customer/myaccount'>My Account</a>]]></comment>
+                    <tooltip>Your API ID must be the same as your smsbox customer ID</tooltip>
                     <validate>required-entry  validate-digits</validate>
                 </field>
             </group>
@@ -33,7 +33,7 @@
             </group>
         </section>
         <section id="interteleco_smsbox_users_configuration" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>User Notifications</label>
+            <label>Notifications Settings</label>
             <tab>interteleco_smsbox</tab>
             <resource>Interteleco_SMSBox::smsbox</resource>
             <group id="new_order" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -45,7 +45,7 @@
                     <validate>required-entry</validate>
                 </field>
                 <field id="interteleco_smsbox_new_order_sender_id" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Select the Sender ID</label>
+                    <label>Sender ID</label>
                     <comment>This is who the SMS will appear from when received</comment>
                     <validate>required-entry</validate>
                     <source_model>Interteleco\SMSBox\Model\Config\Source\Senders</source_model>
@@ -68,7 +68,7 @@
                     <validate>required-entry</validate>
                 </field>
                 <field id="interteleco_smsbox_new_register_sender_id" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Select the Sender ID</label>
+                    <label>Sender ID</label>
                     <comment>This is who the SMS will appear from when received</comment>
                     <validate>required-entry</validate>
                     <source_model>Interteleco\SMSBox\Model\Config\Source\Senders</source_model>
@@ -91,7 +91,7 @@
                     <validate>required-entry</validate>
                 </field>
                 <field id="interteleco_smsbox_new_coupon_sender_id" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Select the Sender ID</label>
+                    <label>Sender ID</label>
                     <comment>This is who the SMS will appear from when received</comment>
                     <source_model>Interteleco\SMSBox\Model\Config\Source\Senders</source_model>
                     <validate>required-entry</validate>

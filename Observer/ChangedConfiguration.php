@@ -16,19 +16,19 @@ class ChangedConfiguration implements ObserverInterface
      *
      * @var \Zend\Http\Request
      */
-    protected $request;
+    private $request;
     /**
      * Layout Interface
      *
      * @var \Magento\Framework\View\LayoutInterface
      */
-    protected $layout;
+    private $layout;
     /**
      * Helper
      *
      * @var \Interteleco\SMSBox\Helper\Data
      */
-    protected $helper;
+    private $helper;
 
     /**
      * Constructor
@@ -40,9 +40,9 @@ class ChangedConfiguration implements ObserverInterface
         Context $context,
         Helper $helper
     ) {
-        $this->request = $context->getRequest();
-        $this->layout  = $context->getLayout();
-        $this->helper  = $helper;
+        $this->_request = $context->getRequest();
+        $this->_layout  = $context->getLayout();
+        $this->_helper  = $helper;
     }
 
     /**
@@ -55,12 +55,14 @@ class ChangedConfiguration implements ObserverInterface
     public function execute(Observer $observer)
     {
         $observer->getEvent()->getName();
-        $result = $this->helper->verifyApi();
+        $result = $this->_helper->verifyApi();
+
         if ($result === false) {
-            $this->helper->setConfigEmpty();
+            $this->_helper->setConfigEmpty();
             throw new LocalizedException(
                 __(
-                    "error in username and/or password is incorrect and/or customer id is invalid"
+                    "error in username and/or password 
+                    is incorrect and/or customer id is invalid"
                 )
             );
         }

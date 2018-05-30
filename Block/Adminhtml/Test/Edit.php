@@ -14,7 +14,7 @@ class Edit extends Container
      *
      * @var Registry
      */
-    protected $coreRegistry = null;
+    private $coreRegistry;
 
     /**
      * @param Context  $context
@@ -35,9 +35,10 @@ class Edit extends Container
      *
      * @return void
      */
-    protected function _construct()
+    public function _construct()
     {
         parent::_construct();
+
         $this->_blockGroup = 'Interteleco_SMSBox';
         $this->_controller = 'adminhtml_test';
         $this->buttonList->remove('back');

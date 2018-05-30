@@ -16,59 +16,57 @@ class NewOrder implements ObserverInterface
      *
      * @var \Zend\Http\Request
      */
-    protected $request;
-    /**
-     * Core event manager proxy
-     *
-     * @var ManagerInterface
-     */
-    protected $eventManager = null;
+    private $request;
     /**
      * Layout Interface
      *
      * @var \Magento\Framework\View\LayoutInterface
      */
-    protected $layout;
+    private $layout;
     /**
      * Data
      *
      * @var $helper
      */
-    protected $helper;
+    private $helper;
     /**
      * Sender ID
      *
      * @var $senderId
      */
-    protected $senderId;
+    private $senderId;
     /**
      * Destination
      *
      * @var $phone
      */
-    protected $phone;
+    private $phone;
     /**
      * Message
      *
      * @var $message
      */
-    protected $message;
+    private $message;
+    /**
+     * Core event manager proxy
+     *
+     * @var ManagerInterface
+     */
+    private $eventManager;
     /**
      * Constructor
      *
-     * @param ManagerInterface $eventManager
      * @param Context          $context
-     * @param Helper           $helper       _helper
+     * @param Helper           $helper
      */
     public function __construct(
-        ManagerInterface $eventManager,
         Context $context,
         Helper $helper
     ) {
-        $this->eventManager = $eventManager;
         $this->request = $context->getRequest();
         $this->layout  = $context->getLayout();
         $this->helper  = $helper;
+        $this->eventManager = $context->getEventManager();
     }
 
     /**
@@ -84,6 +82,7 @@ class NewOrder implements ObserverInterface
             && $this->helper->getSmsboxApiCustomerId() != ""
         ) {
             $order = $observer->getEvent()->getOrder();
+
             $orderData          =   [
                 'order_id'      =>  $order->getIncrementId(),
                 'firstname'     =>  $order->getCustomerFirstname(),

@@ -16,7 +16,7 @@ class Form extends Generic
      *
      * @var \Interteleco\SMSBox\Helper\Data
      */
-    protected $helper;
+    private $helper;
 
     /**
      * @param Context     $context
@@ -40,8 +40,9 @@ class Form extends Generic
      *
      * @return \Magento\Backend\Block\Widget\Form\Generic
      */
-    protected function _prepareForm()
+    public function _prepareForm()
     {
+
         $result     = $this->helper->getInformation();
         $netPoints = $result['points']. ' Points';
         $senders    = $result['senders'];
@@ -61,7 +62,7 @@ class Form extends Generic
         $fieldSet = $form->addFieldset(
             'base_fieldset',
             [
-                'legend' => 'SMSBox Test Api'
+                'legend' => 'Test SMS'
             ]
         );
         $fieldSet->addField(
@@ -69,8 +70,8 @@ class Form extends Generic
             'text',
             [
                 'name'  => 'phone_number',
-                'label' => 'phone number',
-                'title' => 'phone number',
+                'label' => 'Mobile',
+                'title' => 'Mobile',
                 'required' => true,
                 'validate-length' => true,
                 'disabled' => $disabled,
@@ -82,8 +83,8 @@ class Form extends Generic
             'select',
             [
                 'name' => 'sender_id',
-                'label' => 'Sender id',
-                'title' => 'Sender id',
+                'label' => 'Sender ID',
+                'title' => 'Sender ID',
                 'required' => true,
                 'class' => 'required-entry',
                 'disabled' => $disabled,
@@ -94,16 +95,16 @@ class Form extends Generic
             'lang_text',
             'select',
             [
-                'label' => __('Test Language'),
-                'title' => __('Test Language'),
+                'label' => __('Sending Language'),
+                'title' => __('Sending Language'),
                 'name' => 'lang_test',
                 'required' => true,
                 'disabled' => $disabled,
                 'class' => 'required-entry',
                 'options' => [
                     null => __('Select language for test sms'),
-                    'en' => __('Test English Language'),
-                    'ar' => __('Test Arabic Language')
+                    'en' => __('English'),
+                    'ar' => __('Arabic')
                 ],
             ]
         );
@@ -111,8 +112,8 @@ class Form extends Generic
             'net_points',
             'label',
             [
-                'label' => __('Net points'),
-                'title' => __('Net points'),
+                'label' => __('Balance'),
+                'title' => __('Balance'),
                 'bold' => true
             ]
         );

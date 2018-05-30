@@ -6,8 +6,9 @@ use Magento\Framework\Model\AbstractModel;
 
 class History extends AbstractModel
 {
-    protected $eventPrefix = 'interteleco_smsbox';
-    protected function _construct()
+    protected $_eventPrefix = 'interteleco_smsbox';
+
+    public function _construct()
     {
         $this->_init('Interteleco\SMSBox\Model\ResourceModel\History');
     }

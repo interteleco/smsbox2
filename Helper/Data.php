@@ -13,28 +13,28 @@ class Data extends AbstractHelper
     const USER_CONFIG = 'interteleco_smsbox_users_configuration/';
 
     /**
-     *  @var \Magento\Framework\App\Config\ConfigResource\ConfigInterface
+     * @var \Magento\Framework\App\Config\ConfigResource\ConfigInterface
      */
-    protected $configInterface;
+    private $configInterface;
 
     /**
      * To be used by the API
      *
      * @var string
      */
-    protected $host = 'https://www.smsbox.com/';
+    private $host = 'https://www.smsbox.com/';
 
     /**
      * To be used by the API
      *
      * @var string
      */
-    protected $url = 'SMSGateway/Services/Messaging.asmx/';
+    private $uri = 'SMSGateway/Services/Messaging.asmx/';
 
     /**
      * @var \Magento\Framework\HTTP\Client\Curl
      */
-    protected $curl;
+    private $curl;
 
     /**
      * Data constructor.
@@ -53,13 +53,11 @@ class Data extends AbstractHelper
         $this->configInterface = $configInterface;
         $this->curl = $_curl;
     }
-
     /**
      * Getting Basic Configuration
      * These functions to get the api
      * username and password And Customer ID
      */
-
     /**
      * Getting smsbox API Username
      *
@@ -69,7 +67,6 @@ class Data extends AbstractHelper
     {
         return $this->getConfig(self::CONFIG . 'smsbox_username');
     }
-
     /**
      * Getting smsbox API Password
      *
@@ -79,7 +76,6 @@ class Data extends AbstractHelper
     {
         return $this->getConfig(self::CONFIG . 'smsbox_password');
     }
-
     /**
      * Getting smsbox API CustomerId
      *
@@ -89,10 +85,8 @@ class Data extends AbstractHelper
     {
         return (int) $this->getConfig(self::CONFIG . 'smsbox_key');
     }
-
-
     /**
-     * Checking Customer SMS is enabled or not
+     * Checking Customer on order SMS is enabled or not
      *
      * @return string
      */
@@ -104,7 +98,7 @@ class Data extends AbstractHelper
         );
     }
     /**
-     * Checking Customer SMS is enabled or not
+     * Get Sender ID
      *
      * @return string
      */
@@ -116,7 +110,7 @@ class Data extends AbstractHelper
         );
     }
     /**
-     * Checking Customer SMS is enabled or not
+     * Get Message
      *
      * @return string
      */
@@ -127,9 +121,8 @@ class Data extends AbstractHelper
             . 'new_order/interteleco_smsbox_new_order_message'
         );
     }
-
     /**
-     * Checking Customer SMS is enabled or not
+     * Checking Customer on Register SMS is enabled or not
      *
      * @return string
      */
@@ -141,7 +134,7 @@ class Data extends AbstractHelper
         );
     }
     /**
-     * Checking Customer SMS is enabled or not
+     * Get Sender ID
      *
      * @return string
      */
@@ -153,7 +146,7 @@ class Data extends AbstractHelper
         );
     }
     /**
-     * Checking Customer SMS is enabled or not
+     * Get Message
      *
      * @return string
      */
@@ -164,9 +157,8 @@ class Data extends AbstractHelper
             . 'new_register/interteleco_smsbox_new_register_message'
         );
     }
-
     /**
-     * Checking Customer SMS is enabled or not
+     * Checking Customer on New Coupon SMS is enabled or not
      *
      * @return string
      */
@@ -178,7 +170,7 @@ class Data extends AbstractHelper
         );
     }
     /**
-     * Checking Customer SMS is enabled or not
+     * Get Sender ID
      *
      * @return string
      */
@@ -190,7 +182,7 @@ class Data extends AbstractHelper
         );
     }
     /**
-     * Checking Customer SMS is enabled or not
+     * Get Message
      *
      * @return string
      */
@@ -203,11 +195,7 @@ class Data extends AbstractHelper
     }
 
     /**
-     * The Basics:
-     * These functions are used to do the basic functionality
-     */
-    /**
-     * Send Configuration path to this function and get Config data
+     * Send Configuration path to this function and get data
      *
      * @param  @var $configPath
      * @return string
@@ -219,14 +207,13 @@ class Data extends AbstractHelper
             ScopeInterface::SCOPE_STORE
         );
     }
-
     /**
-     * Verification of API Account
+     * logIn of API Account
      *
-     * @param  $userName
-     * @param  $password
-     * @param  $customerId
-     * @return bool
+     * @param $userName
+     * @param $password
+     * @param $customerId
+     * @return mixed
      */
     public function logInApi($userName, $password, $customerId)
     {
@@ -276,7 +263,7 @@ class Data extends AbstractHelper
     }
 
     /**
-     * Verification of API Account
+     * get user Information of API Account
      *
      * @return array
      */
@@ -317,6 +304,15 @@ class Data extends AbstractHelper
         return $result;
     }
 
+    /**
+     * Send new sms  of API Account
+     *
+     * @param $senderId
+     * @param $phone
+     * @param $msg
+     * @param $type
+     * @return bool
+     */
     public function sendSms($senderId, $phone, $msg, $type)
     {
         $customerId = $this->getSmsboxApiCustomerId();
@@ -352,11 +348,12 @@ class Data extends AbstractHelper
             $result['flag']   = 'Failed';
             return $result;
         }
+
         return false;
     }
 
     /**
-     * Verification of API Account
+     * curl Main handling requests
      *
      * @param  @var $uri
      * @param  @var $postData
@@ -364,13 +361,13 @@ class Data extends AbstractHelper
      */
     public function curlMain($uri, $postData)
     {
-        $this->curl->post($this->host . $this->url . $uri, $postData);
+        $this->curl->post($this->host . $this->uri . $uri, $postData);
         $response = $this->curl->getBody();
         return $response;
     }
 
     /**
-     * Insert Admin Config Values in the message using order data
+     * Insert Admin Config Values in the message using data
      *
      * @param  @var $message
      * @param  @var $data
@@ -388,6 +385,9 @@ class Data extends AbstractHelper
         return $message;
     }
 
+    /**
+     * set Config Empty(smsbox_username|smsbox_password|smsbox_key)
+     */
     public function setConfigEmpty()
     {
         $this->setConfigItem('smsbox_username');

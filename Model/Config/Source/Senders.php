@@ -8,13 +8,13 @@ use \Interteleco\SMSBox\Helper\Data as Helper;
 class Senders implements ArrayInterface
 {
     /**
-     * @var Helper
+     * @var $information
      */
-    protected $information;
+    private $information;
     /**
      * @var Helper
      */
-    protected $helper;
+    private $helper;
     /**
      * @param Helper $helper
      */
@@ -28,9 +28,11 @@ class Senders implements ArrayInterface
     {
         $arr = $this->toArray();
         $ret = [];
+
         foreach ($arr as $key => $value) {
             $ret[] = ['value' => $key,'label' => $value];
         }
+
         return $ret;
     }
 

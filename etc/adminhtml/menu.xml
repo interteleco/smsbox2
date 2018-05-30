@@ -14,7 +14,7 @@
              id="Interteleco_SMSBox::history"
              action="smsbox/history" />
         <add parent="Interteleco_SMSBox::smsbox"
-             title="Test SMSBox"
+             title="Test SMS"
              module="Interteleco_SMSBox"
              sortOrder="20"
              resource="Interteleco_SMSBox::smsbox"

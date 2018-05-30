@@ -12,63 +12,63 @@ class NewUser implements ObserverInterface
 {
 
     /**
-     * Core event manager proxy
-     *
-     * @var ManagerInterface
-     */
-    protected $eventManager = null;
-    /**
      * Https request
      *
      * @var \Zend\Http\Request
      */
-    protected $request;
+    private $request;
     /**
      * Layout Interface
      *
      * @var \Magento\Framework\View\LayoutInterface
      */
-    protected $layout;
+    private $layout;
     /**
      * Helper
      *
      * @var \Interteleco\SMSBox\Helper\Data
      */
-    protected $helper;
+    private $helper;
     /**
      * Sender ID
      *
      * @var $senderId
      */
-    protected $senderId;
+    private $senderId;
     /**
      * phone
      *
      * @var $phone
      */
-    protected $phone;
+    private $phone;
     /**
      * Message
      *
      * @var $message
      */
-    protected $message;
+    private $message;
+    /**
+     * Core event manager proxy
+     *
+     * @var ManagerInterface
+     */
+    private $eventManager;
+
     /**
      * Constructor
      *
-     * @param Context          $context
-     * @param Helper           $helper
-     * @param ManagerInterface $eventManager
+     * @param Context $context
+     * @param Helper $helper
+     * @internal param ManagerInterface $eventManager
      */
     public function __construct(
         Context $context,
-        Helper $helper,
-        ManagerInterface $eventManager
+        Helper $helper
     ) {
         $this->helper  = $helper;
         $this->request = $context->getRequest();
         $this->layout  = $context->getLayout();
-        $this->eventManager = $eventManager;
+        $this->eventManager = $context->getEventManager();
     }
     /**
      * The execute class
@@ -83,6 +83,7 @@ class NewUser implements ObserverInterface
             && $this->helper->getSmsboxApiCustomerId() != ""
         ) {
             $event = $observer->getEvent();
+
             $customer = [
                 'firstname' =>$event->getCustomer()->getFirstname(),
                 'lastname'  =>$event->getCustomer()->getLastname()
@@ -99,16 +100,18 @@ class NewUser implements ObserverInterface
                 ->isCustomerNotificationsOnRegisterSenderId();
 
             $this->phone    = $this->request->getPost('telephone');
-            $result = $this->helper->sendSms(
-                $this->senderId,
-                $this->phone,
-                $this->message,
-                'New User'
-            );
-            $this->eventManager->dispatch(
-                'smsbox_on_send_new_sms',
-                ['result' => $result]
-            );
+            if ($this->phone != null) {
+                $result = $this->helper->sendSms(
+                    $this->senderId,
+                    $this->phone,
+                    $this->message,
+                    'New User'
+                );
+                $this->eventManager->dispatch(
+                    'smsbox_on_send_new_sms',
+                    ['result' => $result]
+                );
+            }
         }
     }
 }

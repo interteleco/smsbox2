@@ -26,6 +26,7 @@ class Collection extends SearchResult
         FetchStrategyInterface $fetchStrategy,
         EventManager $eventManager
     ) {
+
         parent::__construct(
             $entityFactory,
             $logger,

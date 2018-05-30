@@ -6,8 +6,9 @@ use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 
 class Collection extends AbstractCollection
 {
-    protected $idFieldName = 'id';
-    protected function _construct()
+    protected $_idFieldName = 'id';
+
+    public function _construct()
     {
         $this->_init(
             'Interteleco\SMSBox\Model\History',

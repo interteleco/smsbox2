@@ -12,7 +12,7 @@ class History extends AbstractDb
      *
      * @return void
      */
-    protected function _construct()
+    public function _construct()
     {
         $this->_init('interteleco_smsbox', 'id');
     }

@@ -13,91 +13,70 @@ class NewCoupon implements ObserverInterface
 {
 
     /**
-     * Core event manager proxy
-     *
-     * @var ManagerInterface
-     */
-    protected $eventManager = null;
-    /**
      * Https request
      *
      * @var \Zend\Http\Request
      */
-    protected $request;
+    private $request;
     /**
      * Layout Interface
      *
      * @var \Magento\Framework\View\LayoutInterface
      */
-    protected $layout;
+    private $layout;
     /**
      * Helper
      *
      * @var \Interteleco\SMSBox\Helper\Data
      */
-    protected $helper;
+    private $helper;
     /**
-     * Username
+     * $customer
      *
      * @var $customer
      */
-    protected $customer;
-    /**
-     * Username
-     *
-     * @var $username
-     */
-    protected $username;
-    /**
-     * Password
-     *
-     * @var $password
-     */
-    protected $password;
-    /**
-     * customerId
-     *
-     * @var $customerId
-     */
-    protected $customerId;
+    private $customer;
     /**
      * Sender ID
      *
      * @var $senderId
      */
-    protected $senderId;
+    private $senderId;
     /**
      * Phone
      *
      * @var $phone
      */
-    protected $phone;
+    private $phone;
     /**
      * Message
      *
      * @var $message
      */
-    protected $message;
-
+    private $message;
+    /**
+     * Core event manager proxy
+     *
+     * @var ManagerInterface
+     */
+    private $eventManager;
     /**
      * Constructor
      *
      * @param Context          $context
      * @param Helper           $helper
      * @param Customer         $customers
-     * @param ManagerInterface $eventManager
      */
     public function __construct(
         Context $context,
         Helper $helper,
-        Customer $customers,
-        ManagerInterface $eventManager
+        Customer $customers
     ) {
         $this->request = $context->getRequest();
         $this->layout  = $context->getLayout();
         $this->helper  = $helper;
         $this->customer = $customers;
-        $this->eventManager = $eventManager;
+        $this->eventManager = $context->getEventManager();
     }
 
     /**
@@ -110,6 +89,7 @@ class NewCoupon implements ObserverInterface
     {
 
         $rule = $observer->getEvent()->getRule();
+
         if ($this->helper->isCustomerNotificationsOnNewCouponStatus() == 1
             && $rule->isObjectNew()
             && $this->helper->getSmsboxApiCustomerId() != null
@@ -151,6 +131,12 @@ class NewCoupon implements ObserverInterface
             }
         }
     }
+    /**
+     * Get Customer By Group Id
+     *
+     * @param $groupIds
+     * @return array
+     */
     private function getFilteredCustomerCollection($groupIds)
     {
         $collection = $this->customer->getCollection()
